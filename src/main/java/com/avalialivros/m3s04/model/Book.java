@@ -58,6 +58,22 @@ public class Book {
         return grades;
     }
 
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCreatedBy(Person createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setYearOfPublication(Integer yearOfPublication) {
+        this.yearOfPublication = yearOfPublication;
+    }
+
     public Double getAverageGrades() {
         if (grades.isEmpty()) {
             return 0.0;

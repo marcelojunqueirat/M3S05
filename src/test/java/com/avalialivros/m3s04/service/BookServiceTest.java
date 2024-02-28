@@ -1,10 +1,12 @@
 package com.avalialivros.m3s04.service;
 
 
+import com.avalialivros.m3s04.exceptions.BookNotFoundException;
 import com.avalialivros.m3s04.exceptions.PersonNotFoundException;
 import com.avalialivros.m3s04.model.Book;
 import com.avalialivros.m3s04.model.Person;
 import com.avalialivros.m3s04.model.transport.BookRatedDTO;
+import com.avalialivros.m3s04.model.transport.BookRatedGuidDTO;
 import com.avalialivros.m3s04.model.transport.operations.CreateBookDTO;
 import com.avalialivros.m3s04.repository.BookRepository;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
@@ -67,5 +70,26 @@ public class BookServiceTest {
 
         Assertions.assertNotNull(listReturned);
         Assertions.assertEquals(books.size(), listReturned.size());
+    }
+
+    @Test
+    void findBookByIdReturnSuccess() throws BookNotFoundException {
+        Person person = new Person();
+        person.setName("Teste 01");
+        person.setEmail("teste01@example.com.br");
+
+        String id = "9ef71c71-c76f-4a73-a7dc-11eff4717abe";
+        Book bookMock = new Book();
+        bookMock.setGuid(id);
+        bookMock.setTitle("Clean Code");
+        bookMock.setYearOfPublication(2008);
+        bookMock.setCreatedBy(person);
+
+        BDDMockito.given(this.bookRepository.findById(id)).willReturn(Optional.of(bookMock));
+        BookRatedGuidDTO returnedBook = this.bookService.findByGuid(id);
+
+        Assertions.assertEquals(bookMock.getTitle(), returnedBook.title());
+        Assertions.assertEquals(bookMock.getYearOfPublication(), returnedBook.yearOfPublication());
+        Assertions.assertNotNull(returnedBook);
     }
 }
