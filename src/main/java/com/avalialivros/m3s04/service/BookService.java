@@ -56,16 +56,17 @@ public class BookService {
                 .orElseThrow(() -> new BookNotFoundException("Livro não encontrado."));
         Person person = this.personService.findByEmail(userInSession.getUsername());
 
-        if(book.getCreatedBy().getGuid() == person.getGuid()) {
+        if (book.getCreatedBy().getGuid() == person.getGuid()) {
             throw new BookRegisteredByThePersonException("Não é possível avaliar um livro cadastrado por você.");
         }
 
-        Rating rating = this.ratingRepository.save(new Rating(body, person, book));
+        Rating rating = new Rating(body, person, book);
+        this.ratingRepository.save(rating);
         LOGGER.info("Avaliação salva, retornando-a...");
         return new RatingDTO(rating);
     }
 
-    public List<BookRatedDTO> list(){
+    public List<BookRatedDTO> list() {
         List<BookRatedDTO> listDTO = bookRepository.findAll().stream()
                 .map(BookRatedDTO::new)
                 .collect(Collectors.toList());

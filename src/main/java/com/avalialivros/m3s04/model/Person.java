@@ -48,6 +48,10 @@ public class Person implements UserDetails {
         return email;
     }
 
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
