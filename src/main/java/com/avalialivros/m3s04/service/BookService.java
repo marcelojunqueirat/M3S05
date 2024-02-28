@@ -42,7 +42,8 @@ public class BookService {
     public BookDTO create(CreateBookDTO body, UserDetails userInSession) throws PersonNotFoundException {
         LOGGER.info("Iniciando a criação de um livro com o usuário de e-mail: {}", userInSession.getUsername());
         Person person = this.personService.findByEmail(userInSession.getUsername());
-        Book book = this.bookRepository.save(new Book(body, person));
+        Book book = new Book(body, person);
+        this.bookRepository.save(book);
         LOGGER.info("Livro salvo, retornando-o...");
         return new BookDTO(book);
     }
