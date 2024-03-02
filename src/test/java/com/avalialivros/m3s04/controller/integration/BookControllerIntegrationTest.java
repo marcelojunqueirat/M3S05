@@ -55,7 +55,6 @@ public class BookControllerIntegrationTest extends TestContainersDatabaseConfigu
         Assertions.assertNotNull(bookDTO.title());
         Assertions.assertNotNull(bookDTO.yearOfPublication());
         Assertions.assertNotNull(bookDTO.createdBy());
-
         Assertions.assertEquals(mockBook.title(), bookDTO.title());
         Assertions.assertEquals(mockBook.yearOfPublication(), bookDTO.yearOfPublication());
     }
@@ -78,7 +77,6 @@ public class BookControllerIntegrationTest extends TestContainersDatabaseConfigu
         Assertions.assertNotNull(ratingDTO.guid());
         Assertions.assertNotNull(ratingDTO.grade());
         Assertions.assertNotNull(ratingDTO.ratedBy());
-
         Assertions.assertEquals(mockRatingDTO.grade(), ratingDTO.grade());
     }
 
